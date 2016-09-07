@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>METODO DE SELECCION</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <script>
+          var N;
+          var a;
+          var U;
+            function calcular() {
+                x = document.getElementById("N");
+                N = x.value;
+                U = (N/(N*0.1));
+                a = new Array(N);
+
+                for (i=0;i<N;i++) {
+                    a[i] = N-i;
+                }
+                c = 0;//aca inicializo el contador
+                c+=3;//porque contador mas 3 porque se cuenta el = del for el que no se toma del n-1 y el -
+                for (i=0;i<N-1;i++) {
+                    c+=3;
+                    min = i;
+                    c++; c+=3;
+                    for (j=i+1;j<N;j++) {
+                        c+=6;
+                        if (a[j]<a[min]) {
+                           min = j;
+                        }
+                    }
+                    aux = a[i];
+                    a[i] = a[min];
+                    a[min] = aux;
+                    c+=7;
+                }
+                x = document.getElementById("c");
+                x.innerHTML = "Conteo: " + c;
+                Formula = 3*Math.pow(N,2)+(11*N)-11;
+                x = document.getElementById("F");
+                x.innerHTML = "Formula: " + Formula;
+            }
+
+           function obtenerCoor(w) {
+
+                P = w;
+                q = new Array(P);
+                for (i=0;i<P;i++) {
+                    q[i] = P-i;
+                }
+                c = 0;
+                c+=3;
+                for (i=0;i<P-1;i++) {
+                    c+=3;
+                    min = i;
+                    c++; c+=3;
+                    for (j=i+1;j<P;j++) {
+                        c+=6;
+                        if (q[j]<q[min]) {
+                           min = j;
+                        }
+                    }
+                    aux = q[i];
+                    q[i] = q[min];
+                    q[min] = aux;
+                    c+=7;
+                }
+               return c;
+            }
+
+            function graficar(){
+            	var canvas = document.getElementById("canvasGrafica");
+            	var lapiz = canvas.getContext("2d");
+            	lapiz.fillStyle = "#FF0000";
+            	lapiz.fillStyle = "#FFF";
+            	//lapiz.fillRect(0,0,canvas.width,canvas.height);
+            	//lapiz.strokeRect(0,0,canvas.width,canvas.height);
+
+                lapiz.fillStyle = "#000000";
+                lapiz.beginPath();
+            	lapiz.moveTo(0,canvas.height);
+              var x =canvas.width/U;
+                for (var i = 0; canvas.height-obtenerCoor(i) > -5000; i++) {
+	            lapiz.lineTo(i*x,canvas.height-obtenerCoor(i));
+            	lapiz.moveTo(i*x,canvas.height-obtenerCoor(i));
+                lapiz.strokeStyle="red";
+            	lapiz.stroke();
+                };
+                //eje y
+                lapiz.beginPath();//Pongo el lapiz
+                lapiz.lineWidth=2;
+                lapiz.strokeStyle="black";
+                lapiz.moveTo(40,0);
+                lapiz.lineTo(40,300);
+                lapiz.stroke();
+                lapiz.closePath();
+
+                //eje x
+                lapiz.beginPath();//Pongo el lapiz
+                lapiz.lineWidth=2;
+                lapiz.strokeStyle="black";
+                lapiz.moveTo(0,298);
+                lapiz.lineTo(300,298);
+                lapiz.stroke();
+                lapiz.closePath();
+
+                texto="Y"; //texto de prueba
+                lapiz.beginPath() //iniciar ruta
+                lapiz.strokeStyle="blue"; //color externo
+                lapiz.fillStyle="red"; //color de relleno
+                lapiz.font="bold 15px arial"; //estilo de texto
+                lapiz.strokeText(texto,43,12); //texto con los dos métodos
+                lapiz.fillText(texto,43,12);
+
+                texto="X";
+                lapiz.beginPath()
+                lapiz.strokeStyle="blue"; //color externo
+                lapiz.fillStyle="red"; //color de relleno
+                lapiz.font="bold 15px arial"; //estilo de texto
+                lapiz.strokeText(texto,285,290); //texto con los dos métodos
+                lapiz.fillText(texto,285,290);
+            }
+
+
+        </script>
+    </head>
+
+    <body>
+    Método de Selección
+      <br></br>
+        <input id="N" type="text">
+        <input type="button" value="Calcular" onclick="calcular(); graficar();">
+        <div id="c"></div>
+        <div id="F"></div>
+      <br></br>
+        <canvas id="canvasGrafica" width="300" height="300"
+
+        </canvas>
+    </body>
+
+</html>
